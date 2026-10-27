@@ -2,6 +2,7 @@ import type { Ctx } from "../ctx";
 import { h } from "../dom";
 import { VIDEO } from "../../core/refs";
 import { exampleState } from "../state";
+import videoCover from "../assets/video-cover.jpg";
 
 export function introView(ctx: Ctx, loadExample: (s: ReturnType<typeof exampleState>) => void): HTMLElement {
   const term = (cls: string, text: string) => h("span", { class: `term ${cls}` }, text);
@@ -19,13 +20,12 @@ export function introView(ctx: Ctx, loadExample: (s: ReturnType<typeof exampleSt
   );
 }
 
-/** 公式出处：静态视频卡片，点击去 B 站。封面用 CSS 画，不使用视频画面或人物形象 */
+/** 公式出处：静态视频卡片（封面为视频截图），点击去 B 站 */
 function videoCard(): HTMLElement {
   return h("a", { class: "video-card", href: VIDEO.url, target: "_blank", rel: "noopener" },
-    h("div", { class: "vc-cover", "aria-hidden": "true" },
-      h("span", { class: "vc-badge" }, "B站"),
-      h("p", { class: "vc-headline" }, "多少钱可以", h("br"), h("mark", null, "财富自由"), "？"),
-      h("span", { class: "vc-play" })),
+    h("div", { class: "vc-cover" },
+      h("img", { src: videoCover, alt: "视频封面：12X / 2.5% = 480X", width: 720, height: 404, loading: "lazy", decoding: "async" }),
+      h("span", { class: "vc-play", "aria-hidden": "true" })),
     h("div", { class: "vc-meta" },
       h("p", { class: "vc-title" }, "你需要多少钱，才能财富自由？"),
       h("p", { class: "vc-author" }, "小Lin说 · 公式出处")));
