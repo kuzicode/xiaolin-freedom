@@ -83,10 +83,10 @@ export const REFS = {
   },
   L: {
     refs: [
-      { value: 300_000, label: "30 万" },
       { value: 500_000, label: "50 万" },
       { value: 1_000_000, label: "100 万" },
       { value: 2_000_000, label: "200 万" },
+      { value: 3_000_000, label: "300 万" },
     ],
     notes: [{ text: "银行 App 的房贷详情里能查到「剩余本金」" }],
   },

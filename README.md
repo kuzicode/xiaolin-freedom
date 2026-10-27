@@ -39,6 +39,10 @@ src/web/    网页：index.html · main.ts · state.ts · views/ · style.css
 test/       vitest
 ```
 
+## 更新日志
+
+见 [CHANGELOG.md](./CHANGELOG.md)。
+
 ## 免责
 
 简化模型，未考虑投资波动、税和费用，不构成投资建议。
