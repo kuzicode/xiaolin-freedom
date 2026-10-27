@@ -5,12 +5,12 @@ import { VIDEO_EXAMPLE } from "../core/refs";
 export type Question = "X" | "kids" | "M" | "house";
 export type Step = "intro" | Question | "result";
 export type Housing = "own" | "mortgage" | "rent" | "buy";
-export type TextField = "X" | "K" | "N4" | "M" | "H" | "rPct" | "A" | "S";
+export type TextField = "X" | "K" | "N4" | "M" | "H" | "L" | "rPct" | "A" | "S";
 
 export const QUESTIONS: readonly Question[] = ["X", "kids", "M", "house"];
 
 export const UNITS: Record<TextField, Unit> = {
-  X: "yuan", K: "wan", N4: "count", M: "wan", H: "wan", rPct: "percent", A: "wan", S: "yuan",
+  X: "yuan", K: "wan", N4: "count", M: "wan", H: "wan", L: "wan", rPct: "percent", A: "wan", S: "yuan",
 };
 
 export interface State {
@@ -30,7 +30,7 @@ export interface State {
 
 type Answers = Pick<State, "text" | "kidsChoice" | "housing">;
 
-const EMPTY_TEXT: Record<TextField, string> = { X: "", K: "", N4: "", M: "", H: "", rPct: "2.5", A: "", S: "" };
+const EMPTY_TEXT: Record<TextField, string> = { X: "", K: "", N4: "", M: "", H: "", L: "", rPct: "2.5", A: "", S: "" };
 
 export function initialState(): State {
   return {
@@ -75,6 +75,13 @@ function value(s: State, f: TextField): number | null {
   return p.ok ? p.value : null;
 }
 
+/** 住房一次性金额：打算买房 = 全款预算 H；正在还房贷 = 剩余本金 L（按现在一次还清计）；其余为 0 */
+function houseAmount(s: State): number | null {
+  if (s.housing === "buy") return value(s, "H");
+  if (s.housing === "mortgage") return value(s, "L");
+  return 0;
+}
+
 export function kidsCount(s: State): number | null {
   if (s.kidsChoice === "4+") return value(s, "N4");
   return s.kidsChoice;
@@ -91,7 +98,7 @@ export function questionValid(s: State, q: Question): boolean {
     case "M":
       return value(s, "M") !== null;
     case "house":
-      return s.housing !== null && (s.housing !== "buy" || value(s, "H") !== null);
+      return s.housing !== null && houseAmount(s) !== null;
   }
 }
 
@@ -142,7 +149,7 @@ export function compute(s: State): FreedomResult {
     K: inc.has("kids") && n > 0 ? value(s, "K") : 0,
     N: inc.has("kids") ? n : 0,
     M: inc.has("M") ? value(s, "M") : 0,
-    H: inc.has("house") && s.housing === "buy" ? value(s, "H") : 0,
+    H: inc.has("house") ? houseAmount(s) : 0,
     rPct: value(s, "rPct") ?? NaN,
     // 资产 / 月存非法时只影响「我现在有多少」，那里用 haveInputs 判空并停止展示
     A: have.A,

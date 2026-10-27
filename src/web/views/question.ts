@@ -64,7 +64,7 @@ function body(ctx: Ctx, q: Question, next: () => void): HTMLElement {
   switch (q) {
     case "X":
       return h("div", { class: "q-body" },
-        amountField(ctx, "X", "元/月", { label: TITLES.X, placeholder: "含房租或房贷月供", onEnter: next }),
+        amountField(ctx, "X", "元/月", { label: TITLES.X, placeholder: "含房租，不含房贷月供", onEnter: next }),
         refChips(ctx, "X", REFS.X));
 
     case "M":
@@ -107,8 +107,11 @@ function body(ctx: Ctx, q: Question, next: () => void): HTMLElement {
               ctx.render();
             },
           }, label))),
-        (s.housing === "rent" || s.housing === "mortgage") &&
-          h("p", { class: "hint" }, s.housing === "rent" ? "房租请算进第 1 题的月开销" : "房贷月供请算进第 1 题的月开销（按长期支出估算，未考虑还清后开销下降，结果偏保守）"),
+        s.housing === "rent" && h("p", { class: "hint" }, "房租请算进第 1 题的月开销"),
+        s.housing === "mortgage" && h("div", { class: "sub" },
+          h("h3", null, "还剩多少房贷本金？"),
+          amountField(ctx, "L", "万", { label: "剩余房贷本金", onEnter: next }),
+          refChips(ctx, "L", REFS.L)),
         s.housing === "buy" && h("div", { class: "sub" },
           h("h3", null, "买房预算（全款）"),
           amountField(ctx, "H", "万", { label: "买房预算", onEnter: next }),

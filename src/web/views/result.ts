@@ -73,7 +73,7 @@ function formulaText(q: string, r: FreedomOk, ctx: Ctx): string {
     case "M":
       return "";
     default:
-      return { own: "有房无贷", mortgage: "月供已计入月开销", rent: "租房", buy: "" }[s.housing ?? "buy"];
+      return { own: "有房无贷", mortgage: "剩余房贷", rent: "租房", buy: "" }[s.housing ?? "buy"];
   }
 }
 

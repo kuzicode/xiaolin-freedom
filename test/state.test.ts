@@ -57,11 +57,29 @@ test("收益率无效或 ≤ 0：结果不可用", () => {
   expect(target(s)).toBe("invalid-input");
 });
 
-test("正在还房贷：住房按 0 算，可以出结果", () => {
+test("正在还房贷：剩余本金一次性计入住房项", () => {
   const s = exampleState();
   s.housing = "mortgage";
+  s.text.L = "50";
   expect(firstInvalidQuestion(s)).toBe(null);
   const r = compute(s);
-  expect(r.ok && r.H).toBe(0);
-  expect(r.ok && r.target).toBe(11_700_000);
+  expect(r.ok && r.H).toBe(500_000);
+  expect(r.ok && r.target).toBe(12_200_000);
+});
+
+test("正在还房贷：剩余本金未填或非法时不能出结果，也不沿用买房预算", () => {
+  const s = exampleState();
+  s.housing = "mortgage";
+  expect(firstInvalidQuestion(s)).toBe("house");
+  s.text.L = "abc";
+  expect(firstInvalidQuestion(s)).toBe("house");
+});
+
+test("有房无贷 / 一直租房：住房按 0 算", () => {
+  for (const housing of ["own", "rent"] as const) {
+    const s = exampleState();
+    s.housing = housing;
+    const r = compute(s);
+    expect(r.ok && r.H).toBe(0);
+  }
 });
