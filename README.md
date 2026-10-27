@@ -2,7 +2,7 @@
 
 按小Lin说《你需要多少钱，才能财富自由？》视频公式做的纯前端计算器：回答 4 个问题，算出你自己的数。
 
-- 在线使用：https://freedomrich.xyz
+- 在线使用：https://calc.freedomrich.xyz
 - 公式出处：https://www.bilibili.com/video/BV1yUHP6rEYD （本项目为非官方工具）
 - 计算都在浏览器里完成，不上传任何数据，没有统计和埋点
 

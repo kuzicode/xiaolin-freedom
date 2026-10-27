@@ -1,5 +1,4 @@
 import "./style.css";
-import { VIDEO } from "../core/refs";
 import type { Ctx } from "./ctx";
 import { h } from "./dom";
 import { firstInvalidQuestion, initialState, type State } from "./state";
@@ -69,7 +68,7 @@ function githubIcon(): SVGSVGElement {
 
 function footer() {
   return h("footer", { class: "foot" },
-    h("p", null, "公式出自 ", h("a", { href: VIDEO.url, target: "_blank", rel: "noopener" }, VIDEO.text), "，本页为非官方工具"),
+    h("p", null, "非官方工具，公式出自小Lin说视频"),
     h("p", null, "简化模型，未考虑投资波动、税和费用，不构成投资建议 · 计算都在你的设备上完成，不上传任何数据"));
 }
 

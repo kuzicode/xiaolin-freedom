@@ -4,7 +4,7 @@ import { VIDEO_EXAMPLE } from "../core/refs";
 
 export type Question = "X" | "kids" | "M" | "house";
 export type Step = "intro" | Question | "result";
-export type Housing = "own" | "rent" | "buy";
+export type Housing = "own" | "mortgage" | "rent" | "buy";
 export type TextField = "X" | "K" | "N4" | "M" | "H" | "rPct" | "A" | "S";
 
 export const QUESTIONS: readonly Question[] = ["X", "kids", "M", "house"];

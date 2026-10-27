@@ -56,3 +56,12 @@ test("收益率无效或 ≤ 0：结果不可用", () => {
   s.text.rPct = "abc";
   expect(target(s)).toBe("invalid-input");
 });
+
+test("还在还房贷：住房按 0 算，可以出结果", () => {
+  const s = exampleState();
+  s.housing = "mortgage";
+  expect(firstInvalidQuestion(s)).toBe(null);
+  const r = compute(s);
+  expect(r.ok && r.H).toBe(0);
+  expect(r.ok && r.target).toBe(11_700_000);
+});

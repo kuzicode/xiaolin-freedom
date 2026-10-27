@@ -64,7 +64,7 @@ function body(ctx: Ctx, q: Question, next: () => void): HTMLElement {
   switch (q) {
     case "X":
       return h("div", { class: "q-body" },
-        amountField(ctx, "X", "元/月", { label: TITLES.X, placeholder: "不含养孩子、医疗、买房", onEnter: next }),
+        amountField(ctx, "X", "元/月", { label: TITLES.X, placeholder: "含房租或房贷月供", onEnter: next }),
         refChips(ctx, "X", REFS.X));
 
     case "M":
@@ -95,10 +95,10 @@ function body(ctx: Ctx, q: Question, next: () => void): HTMLElement {
     }
 
     case "house": {
-      const options: [Housing, string][] = [["own", "已经有房"], ["rent", "一直租房"], ["buy", "打算买房"]];
+      const options: [Housing, string, string?][] = [["own", "已有房", "全款 / 已还清"], ["mortgage", "还在还房贷"], ["rent", "一直租房"], ["buy", "打算买房"]];
       return h("div", { class: "q-body" },
-        h("div", { class: "choices wide", role: "group", "aria-label": "住房打算" },
-          ...options.map(([v, label]) => h("button", {
+        h("div", { class: "choices two", role: "group", "aria-label": "住房打算" },
+          ...options.map(([v, label, sub]) => h("button", {
             type: "button",
             class: "choice",
             "aria-pressed": String(s.housing === v),
@@ -106,8 +106,9 @@ function body(ctx: Ctx, q: Question, next: () => void): HTMLElement {
               s.housing = v;
               ctx.render();
             },
-          }, label))),
-        s.housing === "rent" && h("p", { class: "hint" }, "房租请算进第 1 题的月开销"),
+          }, label, sub && h("small", null, sub)))),
+        (s.housing === "rent" || s.housing === "mortgage") &&
+          h("p", { class: "hint" }, s.housing === "rent" ? "房租请算进第 1 题的月开销" : "房贷月供请算进第 1 题的月开销"),
         s.housing === "buy" && h("div", { class: "sub" },
           h("h3", null, "买房预算（全款）"),
           amountField(ctx, "H", "万", { label: "买房预算", onEnter: next }),

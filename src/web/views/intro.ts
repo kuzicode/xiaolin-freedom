@@ -1,5 +1,6 @@
 import type { Ctx } from "../ctx";
 import { h } from "../dom";
+import { VIDEO } from "../../core/refs";
 import { exampleState } from "../state";
 
 export function introView(ctx: Ctx, loadExample: (s: ReturnType<typeof exampleState>) => void): HTMLElement {
@@ -13,6 +14,19 @@ export function introView(ctx: Ctx, loadExample: (s: ReturnType<typeof exampleSt
     h("p", { class: "lead" }, "回答 4 个问题，算出你自己的数"),
     h("div", { class: "intro-actions" },
       h("button", { type: "button", class: "btn primary big", onclick: () => ctx.go("X") }, "开始"),
-      h("button", { type: "button", class: "btn ghost", onclick: () => loadExample(exampleState()) }, "先看视频里的例子")),
+      h("button", { type: "button", class: "btn ghost", onclick: () => loadExample(exampleState()) }, "视频示例计算")),
+    videoCard(),
   );
+}
+
+/** 公式出处：静态视频卡片，点击去 B 站。封面用 CSS 画，不使用视频画面或人物形象 */
+function videoCard(): HTMLElement {
+  return h("a", { class: "video-card", href: VIDEO.url, target: "_blank", rel: "noopener" },
+    h("div", { class: "vc-cover", "aria-hidden": "true" },
+      h("span", { class: "vc-badge" }, "B站"),
+      h("p", { class: "vc-headline" }, "多少钱可以", h("br"), h("mark", null, "财富自由"), "？"),
+      h("span", { class: "vc-play" })),
+    h("div", { class: "vc-meta" },
+      h("p", { class: "vc-title" }, "你需要多少钱，才能财富自由？"),
+      h("p", { class: "vc-author" }, "小Lin说 · 公式出处")));
 }
