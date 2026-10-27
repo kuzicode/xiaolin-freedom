@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.playwright-mcp/
+
+# 本地专用：项目文档、agent 规则、部署脚本与服务器配置，不进仓库
+docs/
+AGENTS.md
+CLAUDE.md
+scripts/
+deploy/
