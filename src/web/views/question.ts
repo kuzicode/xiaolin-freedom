@@ -108,7 +108,7 @@ function body(ctx: Ctx, q: Question, next: () => void): HTMLElement {
             },
           }, label))),
         (s.housing === "rent" || s.housing === "mortgage") &&
-          h("p", { class: "hint" }, s.housing === "rent" ? "房租请算进第 1 题的月开销" : "房贷月供请算进第 1 题的月开销"),
+          h("p", { class: "hint" }, s.housing === "rent" ? "房租请算进第 1 题的月开销" : "房贷月供请算进第 1 题的月开销（按长期支出估算，未考虑还清后开销下降，结果偏保守）"),
         s.housing === "buy" && h("div", { class: "sub" },
           h("h3", null, "买房预算（全款）"),
           amountField(ctx, "H", "万", { label: "买房预算", onEnter: next }),
