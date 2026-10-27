@@ -57,7 +57,7 @@ test("收益率无效或 ≤ 0：结果不可用", () => {
   expect(target(s)).toBe("invalid-input");
 });
 
-test("还在还房贷：住房按 0 算，可以出结果", () => {
+test("正在还房贷：住房按 0 算，可以出结果", () => {
   const s = exampleState();
   s.housing = "mortgage";
   expect(firstInvalidQuestion(s)).toBe(null);

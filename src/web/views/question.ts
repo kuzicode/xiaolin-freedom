@@ -95,10 +95,10 @@ function body(ctx: Ctx, q: Question, next: () => void): HTMLElement {
     }
 
     case "house": {
-      const options: [Housing, string, string?][] = [["own", "已有房", "全款 / 已还清"], ["mortgage", "还在还房贷"], ["rent", "一直租房"], ["buy", "打算买房"]];
+      const options: [Housing, string][] = [["own", "有房无贷"], ["mortgage", "正在还房贷"], ["rent", "一直租房"], ["buy", "打算买房"]];
       return h("div", { class: "q-body" },
         h("div", { class: "choices two", role: "group", "aria-label": "住房打算" },
-          ...options.map(([v, label, sub]) => h("button", {
+          ...options.map(([v, label]) => h("button", {
             type: "button",
             class: "choice",
             "aria-pressed": String(s.housing === v),
@@ -106,7 +106,7 @@ function body(ctx: Ctx, q: Question, next: () => void): HTMLElement {
               s.housing = v;
               ctx.render();
             },
-          }, label, sub && h("small", null, sub)))),
+          }, label))),
         (s.housing === "rent" || s.housing === "mortgage") &&
           h("p", { class: "hint" }, s.housing === "rent" ? "房租请算进第 1 题的月开销" : "房贷月供请算进第 1 题的月开销"),
         s.housing === "buy" && h("div", { class: "sub" },
