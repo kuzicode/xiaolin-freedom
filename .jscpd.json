@@ -1,0 +1,7 @@
+{
+  "path": ["src", "test"],
+  "format": ["typescript", "css"],
+  "minLines": 6,
+  "reporters": ["console"],
+  "gitignore": true
+}

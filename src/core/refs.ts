@@ -3,7 +3,7 @@
  * value 用核心单位：金额为元，收益率为百分数。
  */
 
-export interface Ref {
+interface Ref {
   value: number;
   label: string;
 }

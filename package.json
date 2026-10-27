@@ -8,9 +8,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "health": "knip --no-exit-code; jscpd"
   },
   "devDependencies": {
+    "jscpd": "5.4.2",
+    "knip": "6.43.0",
     "typescript": "7.0.2",
     "vite": "8.3.5",
     "vitest": "5.0.5"

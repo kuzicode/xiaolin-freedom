@@ -27,6 +27,7 @@ npm install
 npm run dev        # 开发服务器
 npm test           # 单测
 npm run typecheck
+npm run health     # 死代码 / 重复代码报告
 npm run build      # 静态产物 → dist/
 ```
 
